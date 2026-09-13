@@ -2,11 +2,12 @@ import { Router } from "express";
 import { db } from "../db";
 import { barbeiros } from "../db/schema";
 import { eq } from "drizzle-orm";
+import { Request, Response } from "express";
 
 const router = Router();
 
 // Listar barbeiros
-router.get("/", async (_req, res) => {
+router.get("/", async (_req: Request, res: Response) => {
   const result = await db.select().from(barbeiros);
   res.json(result);
 });

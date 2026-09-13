@@ -1,3 +1,4 @@
+import { Request, Response } from "express";
 import { Router } from "express";
 import { db } from "../db";
 import { servicos } from "../db/schema";
@@ -6,13 +7,13 @@ import { eq } from "drizzle-orm";
 const router = Router();
 
 // Listar serviços
-router.get("/", async (_req, res) => {
+router.get("/", async (_req: Request, res: Response) => {
   const result = await db.select().from(servicos);
   res.json(result);
 });
 
 // Buscar serviço por ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const result = await db
@@ -24,7 +25,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Criar serviço
-router.post("/", async (req, res) => {
+router.post("/", async (req: Request, res: Response) => {
   const {
     nome,
     categoria,
@@ -47,7 +48,7 @@ router.post("/", async (req, res) => {
 });
 
 // Atualizar serviço
-router.put("/:id", async (req, res) => {
+router.put("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   const {
     nome,
@@ -72,7 +73,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Deletar serviço
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
   await db.delete(servicos).where(eq(servicos.id, Number(id)));

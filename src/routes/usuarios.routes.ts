@@ -1,3 +1,4 @@
+import { Request, Response } from "express";
 import { Router } from "express";
 import { db } from "../db";
 import { usuarios } from "../db/schema";
@@ -8,13 +9,13 @@ import jwt from "jsonwebtoken";
 const router = Router();
 
 // Listar usuários
-router.get("/", async (_req, res) => {
+router.get("/", async (_req: Request, res: Response) => {
   const result = await db.select().from(usuarios);
   res.json(result);
 });
 
 // Criar usuário
-router.post("/", async (req, res) => {
+router.post("/", async (req: Request, res: Response) => {
   const { nome, email, senha, role, barbeariaId } = req.body;
 
   const senhaHash = await bcrypt.hash(senha, 10);
@@ -31,7 +32,7 @@ router.post("/", async (req, res) => {
 });
 
 // Login
-router.post("/login", async (req, res) => {
+router.post("/login", async (req: Request, res: Response) => {
   const { email, senha } = req.body;
 
   const result = await db
@@ -65,7 +66,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Atualizar usuário
-router.put("/:id", async (req, res) => {
+router.put("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   const { nome, email, role } = req.body;
 
@@ -82,7 +83,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Deletar usuário
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
   await db.delete(usuarios).where(eq(usuarios.id, Number(id)));

@@ -1,3 +1,4 @@
+import { Request, Response } from "express";
 import { Router } from "express";
 import { db } from "../db";
 import { financeiro } from "../db/schema";
@@ -12,7 +13,7 @@ router.get("/", async (_req, res) => {
 });
 
 // Buscar transação por ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const result = await db
@@ -24,7 +25,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Criar transação
-router.post("/", async (req, res) => {
+router.post("/", async (req: Request, res: Response) => {
   const {
     agendamentoId,
     tipo,
@@ -47,7 +48,7 @@ router.post("/", async (req, res) => {
 });
 
 // Atualizar transação
-router.put("/:id", async (req, res) => {
+router.put("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   const {
     tipo,
@@ -70,7 +71,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Deletar transação
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
   await db.delete(financeiro).where(eq(financeiro.id, Number(id)));

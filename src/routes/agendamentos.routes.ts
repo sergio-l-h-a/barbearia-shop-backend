@@ -3,17 +3,18 @@ import { db } from "../db";
 import { agendamentos, clientes, barbeiros } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { sql } from "drizzle-orm/sql";
+import { Request, Response } from "express";
 
 const router = Router();
 
 // Listar agendamentos
-router.get("/", async (_req, res) => {
+router.get("/", async (_req: Request, res: Response) => {
   const result = await db.select().from(agendamentos);
   res.json(result);
 });
 
 // Buscar agendamento por ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const result = await db
@@ -25,7 +26,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Criar agendamento
-router.post("/", async (req, res) => {
+router.post("/", async (req: Request, res: Response) => {
   const {
     clienteId,
     barbeiroId,
@@ -71,7 +72,7 @@ router.post("/", async (req, res) => {
 });
 
 // Atualizar agendamento
-router.put("/:id", async (req, res) => {
+router.put("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   const { status, observacoes, data, horario } = req.body;
 
@@ -89,7 +90,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Deletar agendamento
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
   await db.delete(agendamentos).where(eq(agendamentos.id, Number(id)));

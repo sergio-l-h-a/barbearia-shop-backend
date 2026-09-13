@@ -1,3 +1,4 @@
+import { Request, Response } from "express";
 import { Router } from "express";
 import { db } from "../db";
 import { barbearias } from "../db/schema";
@@ -6,13 +7,13 @@ import { eq } from "drizzle-orm";
 const router = Router();
 
 // Listar todas as barbearias
-router.get("/", async (_req, res) => {
+router.get("/", async (_req: Request, res: Response) => {
   const result = await db.select().from(barbearias);
   res.json(result);
 });
 
 // Buscar barbearia por ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const result = await db
@@ -24,7 +25,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Criar barbearia
-router.post("/", async (req, res) => {
+router.post("/", async (req: Request, res: Response) => {
   const { nome, endereco, telefone, email } = req.body;
 
   await db.insert(barbearias).values({
@@ -38,7 +39,7 @@ router.post("/", async (req, res) => {
 });
 
 // Atualizar barbearia
-router.put("/:id", async (req, res) => {
+router.put("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   const { nome, endereco, telefone, email } = req.body;
 
@@ -57,7 +58,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Deletar barbearia
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
   await db.delete(barbearias).where(eq(barbearias.id, Number(id)));
